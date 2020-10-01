@@ -7,28 +7,20 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: []
+      items: [],
+      data: {},
     }
   }
 
   componentDidMount() {
-    $.ajax({
-      url: '/items',
-      success: (data) => {
-        this.setState({
-          items: data
-        })
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
+    fetch('/plaid')
+      .then(res => res.json())
+      .then(data => this.setState(data));
   }
 
-  render () {
+  render() {
     return (<div>
-      <h1>Item List</h1>
-      <List items={this.state.items}/>
+      {JSON.stringify(this.state.data)}
     </div>)
   }
 }
